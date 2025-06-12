@@ -61,5 +61,9 @@ async def solve_captcha_file(file: UploadFile = File(...)):
         traceback.print_exc()
         return JSONResponse(content={"error": str(e)}, status_code=500)
 
+import os
+import uvicorn
+
 if __name__ == "__main__":
-    uvicorn.run("ocr_server:app", host="0.0.0.0", port=16888)
+    port = int(os.getenv("PORT", 16888))  # 讀取 Render 分配的 PORT，沒抓到才用 16888
+    uvicorn.run("ocr_server:app", host="0.0.0.0", port=port)
